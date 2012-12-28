@@ -1,0 +1,35 @@
+#!/bin/sh
+# tputcolors
+
+# This is a script to create a new branch from a given branch on GIT. The source branch and destination branch should be given as inputs
+if [ $# -ne 2 ] ; then
+  echo "Improper usage of the script"
+  echo "Usage: $0 <source branch name> <destination new branch name>"
+  exit 1
+fi
+
+# Obtain confirmation before doing anything
+read -p "Branch $(tput bold)$(tput setaf 4)$2$(tput sgr0) will be branched off of branch $(tput bold)$(tput setaf 4)$1$(tput sgr0). Is that you wanted to do? " yn
+if [[ ! $yn =~ [Yy] ]] ; then
+  exit
+fi
+
+exit
+#Check-out the source branch from where the new branch should be branched from
+git checkout $1
+git pull
+
+#Create the new branch, checkout that branch, and push it to github
+git branch $2
+git checkout $2
+git push origin $2
+
+#checkout master and delete local copy of the new branch (Can't delete a branch when we're in that branch)
+git checkout master
+git branch $2 -D
+
+#DO a git pull on master and then checkout the new branch from github
+git pull
+git checkout $2
+
+echo "new branch $2 has been created"
