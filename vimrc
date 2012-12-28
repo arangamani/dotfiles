@@ -27,7 +27,7 @@ endfunction
 noremap <leader>ss :call StripWhitespace()<CR>
 
 " highlight OverLength ctermbg=red ctermfg=white guibg=#592929
-match OverLength /\%121v.\+/
+" match OverLength /\%121v.\+/
 
 " Whitespace stuff
 set tabstop=2
