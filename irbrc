@@ -30,9 +30,13 @@ Wirble.init
 # Enable colored output
 Wirble.colorize
 
-require 'rest_connection'
-con = RestConnection::Connection.new
-p con.inspect
+begin
+  require 'rest_connection'
+  con = RestConnection::Connection.new
+  p con.inspect
+rescue LoadError
+  puts "Can't load Restconnection"
+end
 
 puts "loaded"
 
